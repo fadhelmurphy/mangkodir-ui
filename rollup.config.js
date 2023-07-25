@@ -12,6 +12,10 @@ const OUTPUT_DIR = path.join(PACKAGE_ROOT_PATH, "dist");
 const IS_BROWSER_BUNDLE = !!PKG_JSON.browser;
   
 const formats = IS_BROWSER_BUNDLE ? ["umd"] : ["es", "cjs"];
+const LOCAL_GLOBALS = {
+  'react':  'React',
+  'react-dom': 'ReactDOM',
+};
 
 export default formats.map(format => ({
   plugins: [
@@ -26,9 +30,15 @@ export default formats.map(format => ({
     babel({
       exclude: ["node_modules/**"],
       presets: [['@babel/preset-env', {'modules': false}],'@babel/react'],
+      plugins: ["styled-jsx/babel"]
     }),
   ],
   input: INPUT_FILE,
+  
+  external: [
+    'react',
+    'react-dom',
+  ],
   output: {
     ...(format === "umd" ? {file: path.join(OUTPUT_DIR, `${PKG_JSON.srcName}.${format}.js`)} : {}),
     format, 
