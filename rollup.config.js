@@ -12,10 +12,6 @@ const OUTPUT_DIR = path.join(PACKAGE_ROOT_PATH, "dist");
 const IS_BROWSER_BUNDLE = !!PKG_JSON.browser;
   
 const formats = IS_BROWSER_BUNDLE ? ["umd"] : ["es", "cjs"];
-const LOCAL_GLOBALS = {
-  'react':  'React',
-  'react-dom': 'ReactDOM',
-};
 
 export default formats.map(format => ({
   plugins: [
